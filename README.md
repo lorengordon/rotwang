@@ -56,7 +56,7 @@ command line.
 
 - `--path`: Path to the salt formula to test. (REQUIRED.)
 
-# Examples:
+# Examples
 
 ```
 git clone https://github.com/plus3it/rotwang.git
@@ -65,3 +65,8 @@ export SALTSOURCE=git://github.com/saltstack/salt.git
 rotwang init --saltver=develop
 rotwang test --path=/path/to/formula
 ```
+
+# Wishlist
+
+- [ ] Compare salt-call output with expected output and assert true if they
+are the same or assert false if there are differences.
