@@ -93,3 +93,5 @@ rotwang test --path=/path/to/formula
 
 - [ ] Compare salt-call output with expected output and assert true if they
 are the same or assert false if there are differences.
+- [ ] Add example using `rotwang` with a CI tool, by documenting the
+.travis.yml file for Travis CI.
