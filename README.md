@@ -31,38 +31,61 @@ rotwang configuration.
 
 # Usage
 
-## rotwang.py init <params>
+## rotwang.py init [params]
 
-`rotwang.py init` initializes the salt environment and prepares rotwang to 
-execute the tests. It is required to execute `rotwang.py init` before testing
-the formula. `rotwang.py init` accepts the parameters below. Parameters may be
-passed on the command line, or set as environment variables. In the list
-below, this is specifed in the form `[cmdline | env]`. Parameters passed on
-the command line override those set in environment variables.
+`rotwang.py init` initializes the salt environment. It is required to execute
+`rotwang.py init` before testing the formula (unless you have manually
+installed salt and ensured the executables are in the PATH). `rotwang.py init`
+accepts the parameters below. Parameters may be passed on the command line, or
+set as environment variables. In the list below, this is specifed in the form
+`[cmdline | env]`. Parameters passed on the command line override those set in
+environment variables.
 
-- `[--saltver | SALTVER]`: Version of salt to install. Rotwang uses the [salt
-bootstrap](https://github.com/saltstack/salt-bootstrap) to install salt. The
-value of this parameter is passed directly to the 'git' parameter of the salt
-bootstrap installer, and so the parameter may set to any value accepted by the
-bootstrap installer. This includes git branch names or git tags. (REQUIRED.)
+- `[--saltver | SALTVER]`: Version of salt to install. Appropriate values
+depend on the `saltinstaller` method used to install salt. If the `saltver`
+parameter is not specified, the version of salt installed will be the default
+of the selected `saltinstaller` method. (In other words, `rotwang` falls back
+to whatever the external installer does when no version is specified.)
+(*OPTIONAL*.)
 
-- `[--saltsource | SALTSOURCE]`: Git url to the repo hosting the salt source.
-(OPTIONAL. Defaults to `git://github.com/saltstack/salt.git`.)
+    - When using the `pip` installer (the default), the value of this
+    parameter is passed to pip as the version of the package (e.g. pip install
+    salt=="2015.8.1").
 
-## rotwang.py test <params>
+    - When using the `bootstrap` installer, the value of `saltver` is passed
+    directly to the 'git' parameter of the salt bootstrap installer, and so
+    the parameter may set to any value accepted by the bootstrap installer.
+    This includes git branch names or git tags.
+
+- `[--saltinstaller | SALTINSTALLER]`: Specifies the method to use to install
+salt. Valid options include: `bootstrap | pip`. (*OPTIONAL*. Defaults to
+`pip`.)
+
+    - `pip` uses python pip to install salt from pypi.
+
+    - `bootstrap` utilizes the [salt bootstrap](
+    https://github.com/saltstack/salt-bootstrap) to install salt.
+
+- `[--saltrepo | SALTREPO]`: Git url to the repo hosting the salt source. This
+parameter is honored only when using `--saltinstaller=bootstrap`. (*OPTIONAL*.
+Defaults to `git://github.com/saltstack/salt.git`.)
+
+## rotwang.py test [params]
 
 `rotwang.py test` accepts the parameters below, and they must be passed on the
-command line.
+command line. If the salt executables are not in the PATH, `rotwang` will exit
+with an error. `rotwang init` may be used to install salt (or you can install
+salt via whatever means you like, as long as it ends up in the PATH).
 
-- `--path`: Path to the salt formula to test. (REQUIRED.)
+- `--path`: Path to the salt formula to test. (*REQUIRED*.)
 
 # Examples
 
 ```
 git clone https://github.com/plus3it/rotwang.git
-python ./rotwang/setup.py 
-export SALTSOURCE=git://github.com/saltstack/salt.git
-rotwang init --saltver=develop
+python ./rotwang/setup.py
+export SALTREPO=git://github.com/saltstack/salt.git
+rotwang init --saltinstaller=bootstrap --saltver=develop
 rotwang test --path=/path/to/formula
 ```
 
