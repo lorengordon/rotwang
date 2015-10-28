@@ -46,7 +46,7 @@ depend on the `saltinstaller` method used to install salt. If the `saltver`
 parameter is not specified, the version of salt installed will be the default
 of the selected `saltinstaller` method. (In other words, `rotwang` falls back
 to whatever the external installer does when no version is specified.)
-(*OPTIONAL*.)
+(*OPTIONAL*. Defaults to `None`.)
 
     - When using the `pip` installer (the default), the value of this
     parameter is passed to pip as the version of the package (e.g. pip install
