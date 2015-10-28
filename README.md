@@ -49,8 +49,8 @@ to whatever the external installer does when no version is specified.)
 (*OPTIONAL*. Defaults to `None`.)
 
     - When using the `pip` installer (the default), the value of this
-    parameter is passed to pip as the version of the package (e.g. pip install
-    salt=="2015.8.1").
+    parameter is passed to pip as the version of the package (e.g. `pip 
+    install salt=="2015.8.1"`).
 
     - When using the `bootstrap` installer, the value of `saltver` is passed
     directly to the 'git' parameter of the salt bootstrap installer, and so
